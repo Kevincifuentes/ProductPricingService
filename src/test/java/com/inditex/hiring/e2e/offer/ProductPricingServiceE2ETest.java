@@ -11,6 +11,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +52,31 @@ public class ProductPricingServiceE2ETest {
 
         //then
         assertThat(offer.getOfferId()).isEqualTo(expectedId);
+    }
+
+    @Test
+    public void shouldFindAll() {
+        //given
+        final var expectedId = createOffer();
+        final var expectedSecondId = createOffer();
+
+        final var offers = List.of(
+                given().
+                        contentType(ContentType.JSON).
+                        when().
+                        port(port).
+                        get("/offer").
+                        then().
+                        log().ifValidationFails().
+                        statusCode(HttpStatus.OK.value())
+                        .extract()
+                        .as(Offer[].class)
+        );
+
+        //then
+        assertThat(offers).hasSize(2)
+                .extracting(Offer::getOfferId)
+                .containsExactlyInAnyOrder(expectedId, expectedSecondId);
     }
 
     private long createOffer() {
