@@ -1,4 +1,4 @@
-package com.inditex.hiring.application.offer.ports;
+package com.inditex.hiring.infrastructure.persistence.ports;
 
 import com.inditex.hiring.domain.Offer;
 

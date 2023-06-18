@@ -3,7 +3,7 @@ package com.inditex.hiring.application.offer;
 import com.inditex.hiring.application.Command;
 import com.inditex.hiring.application.CommandBus;
 import com.inditex.hiring.application.CommandNotFoundException;
-import com.inditex.hiring.application.offer.ports.OfferReader;
+import com.inditex.hiring.infrastructure.persistence.ports.OfferReader;
 import com.inditex.hiring.objectmother.application.AddOfferCommandMother;
 import com.inditex.hiring.objectmother.domain.OfferMother;
 import org.junit.Test;
