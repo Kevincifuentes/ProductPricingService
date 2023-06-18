@@ -1,4 +1,4 @@
-package com.inditex.hiring.application;
+package com.inditex.hiring.application.cqrs;
 
 import static java.lang.String.format;
 

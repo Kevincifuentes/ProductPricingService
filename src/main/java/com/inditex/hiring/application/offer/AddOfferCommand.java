@@ -1,6 +1,6 @@
 package com.inditex.hiring.application.offer;
 
-import com.inditex.hiring.application.Command;
+import com.inditex.hiring.application.cqrs.Command;
 import lombok.Builder;
 import lombok.Value;
 

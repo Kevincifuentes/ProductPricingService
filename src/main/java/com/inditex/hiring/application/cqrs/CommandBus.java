@@ -1,4 +1,4 @@
-package com.inditex.hiring.application;
+package com.inditex.hiring.application.cqrs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class CommandBus {
                 .execute(command);
     }
 
-    private boolean doesHandleType(final CommandHandler<? extends Command> commandHandler, final Command command) {
+    private boolean doesHandleType(final CommandHandler commandHandler, final Command command) {
         final var commandHandlerClassGenericInterfaces = commandHandler.getClass().getGenericInterfaces();
         if (commandHandlerClassGenericInterfaces.length == 0) {
             return false;
