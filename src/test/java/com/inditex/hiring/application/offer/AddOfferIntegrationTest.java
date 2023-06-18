@@ -5,8 +5,10 @@ import com.inditex.hiring.application.CommandBus;
 import com.inditex.hiring.application.CommandNotFoundException;
 import com.inditex.hiring.domain.ports.OfferReader;
 import com.inditex.hiring.infrastructure.Application;
+import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferJPARepository;
 import com.inditex.hiring.objectmother.application.AddOfferCommandMother;
 import com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.model.OfferViewMother;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,14 @@ public class AddOfferIntegrationTest {
 
     @Autowired
     private OfferReader offerReader;
+
+    @Autowired
+    private OfferJPARepository offerJPARepository;
+
+    @After
+    public void tearDown() {
+        offerJPARepository.deleteAll();
+    }
 
     @Test
     public void shouldThrowNotFoundException() {

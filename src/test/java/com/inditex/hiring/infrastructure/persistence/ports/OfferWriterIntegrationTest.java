@@ -2,8 +2,10 @@ package com.inditex.hiring.infrastructure.persistence.ports;
 
 import com.inditex.hiring.domain.ports.OfferReader;
 import com.inditex.hiring.domain.ports.OfferWriter;
+import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferJPARepository;
 import com.inditex.hiring.objectmother.domain.OfferMother;
 import com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.model.OfferViewMother;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,13 @@ public class OfferWriterIntegrationTest {
     @Autowired
     private OfferWriter testSubject;
 
+    @Autowired
+    private OfferJPARepository offerJPARepository;
+
+    @After
+    public void tearDown() {
+        offerJPARepository.deleteAll();
+    }
 
     @Test
     public void testSaveOffer() {
