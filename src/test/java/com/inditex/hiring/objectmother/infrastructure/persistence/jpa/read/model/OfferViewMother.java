@@ -50,9 +50,14 @@ public final class OfferViewMother {
         return view;
     }
 
-    private static BigDecimal getPriceOnMinimumScale(Offer offer) {
-        return offer.getPrice().setScale(Math.max(MINIMUM_SCALE, offer.getPrice().scale()), RoundingMode.UNNECESSARY);
+    private static BigDecimal getPriceOnMinimumScale(final Offer offer) {
+        return getPriceOnMinimumScale(offer.getPrice());
     }
+
+    private static BigDecimal getPriceOnMinimumScale(final BigDecimal price) {
+        return price.setScale(Math.max(MINIMUM_SCALE, price.scale()), RoundingMode.UNNECESSARY);
+    }
+
 
     public static OfferView from(final OfferEntity offerEntity) {
         final var view = new OfferView();
@@ -63,7 +68,7 @@ public final class OfferViewMother {
         view.setEndDate(offerEntity.getEndDate());
         view.setPriority(offerEntity.getPriority());
         view.setPartNumber(offerEntity.getPartNumber());
-        view.setPrice(offerEntity.getPrice());
+        view.setPrice(getPriceOnMinimumScale(offerEntity.getPrice()));
         view.setCurrencyISO(offerEntity.getCurrencyISO());
         return view;
     }
