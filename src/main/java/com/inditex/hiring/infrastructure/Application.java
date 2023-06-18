@@ -1,4 +1,4 @@
-package com.inditex.hiring;
+package com.inditex.hiring.infrastructure;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,7 @@
-package com.inditex.hiring.controller;
+package com.inditex.hiring.infrastructure.controller;
 
-import com.inditex.hiring.controller.dto.Offer;
-import com.inditex.hiring.controller.dto.OfferByPartNumber;
+import com.inditex.hiring.infrastructure.controller.dto.Offer;
+import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
 import java.util.ArrayList;
 import java.util.List;
 

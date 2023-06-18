@@ -1,6 +1,6 @@
 package com.inditex.hiring.e2e.offer;
 
-import com.inditex.hiring.Application;
+import com.inditex.hiring.infrastructure.Application;
 import com.inditex.hiring.e2e.offer.models.request.AddOfferRequest;
 import com.inditex.hiring.e2e.offer.models.response.AddOfferResponse;
 import com.inditex.hiring.objectmother.e2e.offer.models.request.AddOfferRequestMother;
