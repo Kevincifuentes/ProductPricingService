@@ -2,6 +2,8 @@ package com.inditex.hiring.infrastructure.controller;
 
 import com.inditex.hiring.application.cqrs.CommandBus;
 import com.inditex.hiring.application.offer.AddOfferCommand;
+import com.inditex.hiring.application.offer.GetOfferHandler;
+import com.inditex.hiring.application.offer.GetOfferQuery;
 import com.inditex.hiring.infrastructure.controller.dto.Offer;
 import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
 import jakarta.validation.Valid;
@@ -20,6 +22,7 @@ import java.util.List;
 public class OfferController {
 
   private final CommandBus commandBus;
+  private final GetOfferHandler getOfferHandler;
 
   //TODO: Refactor endpoints to use /offers plural instead, using singular doesn't comply with REST standards.
   @PostMapping(value = "/offer", consumes = "application/json")
@@ -56,9 +59,7 @@ public class OfferController {
   @GetMapping(value = "/offer/{id}")
   @ResponseStatus(HttpStatus.OK)
   public Offer getOfferById(Long offerId) {
-
-    //TODO implement it!.
-    return new Offer();
+    return Offer.from(getOfferHandler.ask(new GetOfferQuery(offerId)));
   }
 
   @GetMapping(value = "brand/{brandId}/partnumber/{partnumber}/offer")

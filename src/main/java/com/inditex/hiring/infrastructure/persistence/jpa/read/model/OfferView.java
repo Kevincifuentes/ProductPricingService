@@ -14,7 +14,7 @@ public class OfferView {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "BRAND_ID")
-    private Long brandId;
+    private Integer brandId;
     @Column(name = "PRICE_LIST")
     private Long priceListId;
     @Column(name = "START_DATE")
@@ -22,7 +22,7 @@ public class OfferView {
     @Column(name = "END_DATE")
     private Instant endDate;
     @Column(name = "PRIORITY")
-    private Long priority;
+    private Integer priority;
     @Column(name = "PARTNUMBER")
     private String partNumber;
     @Column(name = "PRICE")

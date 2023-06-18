@@ -1,9 +1,10 @@
 package com.inditex.hiring.infrastructure.controller.dto;
 
+import com.inditex.hiring.infrastructure.persistence.jpa.read.model.OfferView;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -13,7 +14,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class Offer implements Serializable {
 
-  private static final DateTimeFormatter DATE_EXPECTED_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH.mm.ss'Z'");
+  private static final DateTimeFormatter DATE_EXPECTED_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH.mm.ss'Z'")
+          .withZone(ZoneId.of("UTC"));
 
   private Long offerId;
 
@@ -49,6 +51,20 @@ public class Offer implements Serializable {
     this.priority = priority;
     this.price = price;
     this.currencyIso = currencyIso;
+  }
+
+  public static Offer from(final OfferView offerView) {
+    return new Offer(
+        offerView.getId(),
+        offerView.getBrandId(),
+        formatDate(offerView.getStartDate()),
+        formatDate(offerView.getEndDate()),
+        offerView.getPriceListId(),
+        offerView.getPartNumber(),
+        offerView.getPriority(),
+        offerView.getPrice(),
+        offerView.getCurrencyISO()
+    );
   }
 
   public Long getOfferId() {
@@ -131,11 +147,11 @@ public class Offer implements Serializable {
     return parseDate(endDate);
   }
 
-  private Instant parseDate(final String dateString) {
-    return Instant.from(
-            LocalDateTime.parse(dateString, DATE_EXPECTED_PATTERN)
-            .atZone(ZoneId.of("UTC"))
-            .toInstant()
-    );
+  private static Instant parseDate(final String dateString) {
+    return Instant.from(DATE_EXPECTED_PATTERN.parse(dateString));
+  }
+
+  private static String formatDate(final Instant instant) {
+    return DATE_EXPECTED_PATTERN.format(instant);
   }
 }
