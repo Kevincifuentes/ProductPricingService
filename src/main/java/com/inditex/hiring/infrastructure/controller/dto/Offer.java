@@ -1,5 +1,6 @@
 package com.inditex.hiring.infrastructure.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inditex.hiring.infrastructure.persistence.jpa.read.model.OfferView;
 
 import java.io.Serializable;
@@ -139,10 +140,12 @@ public class Offer implements Serializable {
     this.currencyIso = currencyIso;
   }
 
+  @JsonIgnore
   public Instant getStartDateAsInstant() {
     return parseDate(startDate);
   }
 
+  @JsonIgnore
   public Instant getEndDateAsInstant() {
     return parseDate(endDate);
   }

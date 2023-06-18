@@ -56,9 +56,9 @@ public class OfferController {
 
   }
 
-  @GetMapping(value = "/offer/{id}")
+  @GetMapping(value = "/offer/{offerId}")
   @ResponseStatus(HttpStatus.OK)
-  public Offer getOfferById(Long offerId) {
+  public Offer getOfferById(@PathVariable final Long offerId) {
     return Offer.from(getOfferHandler.ask(new GetOfferQuery(offerId)));
   }
 
