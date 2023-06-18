@@ -4,6 +4,7 @@ import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Builder
@@ -17,6 +18,6 @@ public class Offer {
     Instant endDate;
     long priority;
     String partNumber;
-    double price;
+    BigDecimal price;
     String currencyISO;
 }

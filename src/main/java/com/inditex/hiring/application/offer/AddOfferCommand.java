@@ -4,6 +4,7 @@ import com.inditex.hiring.application.cqrs.Command;
 import lombok.Builder;
 import lombok.Value;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Value
@@ -15,6 +16,6 @@ public class AddOfferCommand implements Command {
     Instant endDate;
     long priority;
     String partNumber;
-    double price;
+    BigDecimal price;
     String currencyISO;
 }

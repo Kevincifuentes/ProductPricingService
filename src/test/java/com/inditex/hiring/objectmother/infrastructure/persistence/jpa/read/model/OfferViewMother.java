@@ -6,6 +6,7 @@ import com.inditex.hiring.infrastructure.persistence.jpa.read.model.OfferView;
 import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferEntity;
 import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import static com.inditex.hiring.TestSuiteUtils.FAKER;
@@ -70,8 +71,8 @@ public final class OfferViewMother {
         view.setEndDate(Instant.now());
         view.setPriority(FAKER.number().randomNumber());
         view.setPartNumber(String.valueOf(FAKER.number().randomNumber()));
-        view.setPrice(
-                FAKER.number().randomDouble(MAX_NUMBER_OF_DECIMALS_PRICE, MIN_VALUE_PRICE, MAX_VALUE_PRICE)
+        view.setPrice(BigDecimal.valueOf(
+                FAKER.number().randomDouble(MAX_NUMBER_OF_DECIMALS_PRICE, MIN_VALUE_PRICE, MAX_VALUE_PRICE))
         );
         view.setCurrencyISO(FAKER.currency().code());
         return view;

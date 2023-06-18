@@ -3,6 +3,7 @@ package com.inditex.hiring.infrastructure.persistence.jpa.read.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
@@ -25,7 +26,7 @@ public class OfferView {
     @Column(name = "PARTNUMBER")
     private String partNumber;
     @Column(name = "PRICE")
-    private double price;
+    private BigDecimal price;
     @Column(name = "CURR")
     private String currencyISO;
 }
