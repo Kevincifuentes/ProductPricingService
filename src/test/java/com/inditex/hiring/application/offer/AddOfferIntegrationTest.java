@@ -3,17 +3,21 @@ package com.inditex.hiring.application.offer;
 import com.inditex.hiring.application.Command;
 import com.inditex.hiring.application.CommandBus;
 import com.inditex.hiring.application.CommandNotFoundException;
-import com.inditex.hiring.infrastructure.persistence.ports.OfferReader;
+import com.inditex.hiring.domain.ports.OfferReader;
+import com.inditex.hiring.infrastructure.Application;
 import com.inditex.hiring.objectmother.application.AddOfferCommandMother;
-import com.inditex.hiring.objectmother.domain.OfferMother;
+import com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.model.OfferViewMother;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
 public class AddOfferIntegrationTest {
 
     @Autowired
@@ -47,7 +51,7 @@ public class AddOfferIntegrationTest {
         assertThat(storedOffers)
                 .hasSize(1)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
-                .containsExactly(OfferMother.from(addOfferCommand));
+                .containsExactly(OfferViewMother.from(addOfferCommand));
     }
 
     /** Test command

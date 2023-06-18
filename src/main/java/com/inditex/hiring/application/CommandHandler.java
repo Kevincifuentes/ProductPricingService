@@ -1,5 +1,5 @@
 package com.inditex.hiring.application;
 
-public interface CommandHandler<T extends Command> {
-    void execute(T command);
+public interface CommandHandler<P extends Command> {
+    void execute(P command);
 }

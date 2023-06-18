@@ -1,7 +1,7 @@
 package com.inditex.hiring.infrastructure.persistence.jpa.write;
 
 import com.inditex.hiring.domain.Offer;
-import com.inditex.hiring.infrastructure.persistence.ports.OfferWriter;
+import com.inditex.hiring.domain.ports.OfferWriter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

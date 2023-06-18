@@ -1,5 +1,7 @@
 package com.inditex.hiring.infrastructure.persistence.ports;
 
+import com.inditex.hiring.domain.ports.OfferReader;
+import com.inditex.hiring.domain.ports.OfferWriter;
 import com.inditex.hiring.objectmother.domain.OfferMother;
 import com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.model.OfferViewMother;
 import org.junit.Test;
