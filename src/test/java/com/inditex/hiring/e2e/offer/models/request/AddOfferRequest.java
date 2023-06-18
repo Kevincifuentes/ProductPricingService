@@ -1,7 +1,5 @@
 package com.inditex.hiring.e2e.offer.models.request;
 
-import java.time.Instant;
-
-public record AddOfferRequest(long brandId, long priceListId, Instant startDate,
-                              Instant endDate, long priority, String partNumber, double price, String currencyISO) {
+public record AddOfferRequest(int brandId, long priceListId, String startDate,
+                              String endDate, long priority, String partNumber, double price, String currencyISO) {
 }

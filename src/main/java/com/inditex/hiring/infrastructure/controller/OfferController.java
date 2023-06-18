@@ -1,34 +1,34 @@
 package com.inditex.hiring.infrastructure.controller;
 
+import com.inditex.hiring.application.cqrs.CommandBus;
+import com.inditex.hiring.application.offer.AddOfferCommand;
 import com.inditex.hiring.infrastructure.controller.dto.Offer;
 import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * You can change this controller but please do not change ends points signatures & payloads.
  */
+@AllArgsConstructor
 @RestController
 public class OfferController {
 
-  @RequestMapping(value = "/offer", method = RequestMethod.POST, consumes = "application/json")
+  private final CommandBus commandBus;
+
+  //TODO: Refactor endpoints to use /offers plural instead, using singular doesn't comply with REST standards.
+  @PostMapping(value = "/offer", consumes = "application/json")
   @ResponseStatus(HttpStatus.CREATED)
   public void createNewOffer(@RequestBody @Valid Offer offer) {
-
-    //TODO implement it!.
-
+    commandBus.execute(buildAddOfferCommand(offer));
   }
 
-  @RequestMapping(value = "/offer", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/offer")
   @ResponseStatus(HttpStatus.OK)
   public void deleteAllOffers() {
 
@@ -36,7 +36,7 @@ public class OfferController {
 
   }
 
-  @RequestMapping(value = "/offer/{id}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/offer/{id}")
   @ResponseStatus(HttpStatus.OK)
   public void deleteOfferById(@RequestParam Long id) {
 
@@ -44,7 +44,7 @@ public class OfferController {
 
   }
 
-  @RequestMapping(value = "/offer", method = RequestMethod.GET)
+  @GetMapping(value = "/offer")
   @ResponseStatus(HttpStatus.OK)
   public List<Offer> getAllOffers() {
 
@@ -53,7 +53,7 @@ public class OfferController {
 
   }
 
-  @RequestMapping(value = "/offer/{id}", method = RequestMethod.GET)
+  @GetMapping(value = "/offer/{id}")
   @ResponseStatus(HttpStatus.OK)
   public Offer getOfferById(Long offerId) {
 
@@ -61,11 +61,24 @@ public class OfferController {
     return new Offer();
   }
 
-  @RequestMapping(value = "brand/{brandId}/partnumber/{partnumber}/offer", method = RequestMethod.GET)
+  @GetMapping(value = "brand/{brandId}/partnumber/{partnumber}/offer")
   @ResponseStatus(HttpStatus.OK)
   public List<OfferByPartNumber> getOfferByPartNumber(Integer brandId, String partnumber) {
 
     //TODO implement it!.
     return new ArrayList<>();
+  }
+
+  private AddOfferCommand buildAddOfferCommand(final Offer offer) {
+    return AddOfferCommand.builder()
+            .brandId(offer.getBrandId())
+            .priceListId(offer.getPriceListId())
+            .partNumber(offer.getProductPartnumber())
+            .price(offer.getPrice())
+            .priority(offer.getPriority())
+            .currencyISO(offer.getCurrencyIso())
+            .startDate(offer.getStartDateAsInstant())
+            .endDate(offer.getEndDateAsInstant())
+            .build();
   }
 }

@@ -7,6 +7,7 @@ import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferEntity;
 import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 
 import static com.inditex.hiring.TestSuiteUtils.FAKER;
@@ -16,6 +17,7 @@ public final class OfferViewMother {
     public static final int MAX_NUMBER_OF_DECIMALS_PRICE = 2;
     public static final int MIN_VALUE_PRICE = 0;
     public static final int MAX_VALUE_PRICE = 100;
+    public static final int MINIMUM_SCALE = 2;
 
     private OfferViewMother() throws InstantiationNotAllowed {
         throw new InstantiationNotAllowed(this.getClass().getName());
@@ -43,9 +45,13 @@ public final class OfferViewMother {
         view.setEndDate(offer.getEndDate());
         view.setPriority(offer.getPriority());
         view.setPartNumber(offer.getPartNumber());
-        view.setPrice(offer.getPrice());
+        view.setPrice(getPriceOnMinimumScale(offer));
         view.setCurrencyISO(offer.getCurrencyISO());
         return view;
+    }
+
+    private static BigDecimal getPriceOnMinimumScale(Offer offer) {
+        return offer.getPrice().setScale(Math.max(MINIMUM_SCALE, offer.getPrice().scale()), RoundingMode.UNNECESSARY);
     }
 
     public static OfferView from(final OfferEntity offerEntity) {
