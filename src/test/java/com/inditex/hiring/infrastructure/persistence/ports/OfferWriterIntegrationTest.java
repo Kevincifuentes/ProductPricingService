@@ -1,14 +1,16 @@
-package com.inditex.hiring.infrastructure.persistence;
+package com.inditex.hiring.infrastructure.persistence.ports;
 
-import com.inditex.hiring.infrastructure.persistence.ports.OfferReader;
-import com.inditex.hiring.infrastructure.persistence.ports.OfferWriter;
 import com.inditex.hiring.objectmother.domain.OfferMother;
+import com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.model.OfferViewMother;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class OfferWriterIntegrationTest {
 
@@ -30,7 +32,7 @@ public class OfferWriterIntegrationTest {
         // then
         assertThat(offerReader.findAll())
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
-                .containsOnly(offer);
+                .containsOnly(OfferViewMother.from(offer));
     }
 
 
