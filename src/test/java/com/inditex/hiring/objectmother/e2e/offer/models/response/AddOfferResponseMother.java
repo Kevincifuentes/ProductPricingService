@@ -2,12 +2,11 @@ package com.inditex.hiring.objectmother.e2e.offer.models.response;
 
 import com.inditex.hiring.e2e.offer.models.request.AddOfferRequest;
 import com.inditex.hiring.e2e.offer.models.response.AddOfferResponse;
-import com.inditex.hiring.objectmother.e2e.offer.models.InstantiationNotAllowed;
+import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
 import static com.inditex.hiring.TestSuiteUtils.FAKER;
 
 public final class AddOfferResponseMother {
-
     private AddOfferResponseMother() throws InstantiationNotAllowed {
         throw new InstantiationNotAllowed(this.getClass().getName());
     }

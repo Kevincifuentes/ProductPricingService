@@ -1,7 +1,7 @@
 package com.inditex.hiring.objectmother.e2e.offer.models.request;
 
 import com.inditex.hiring.e2e.offer.models.request.AddOfferRequest;
-import com.inditex.hiring.objectmother.e2e.offer.models.InstantiationNotAllowed;
+import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
 import java.time.Instant;
 
@@ -9,7 +9,7 @@ import static com.inditex.hiring.TestSuiteUtils.FAKER;
 
 public final class AddOfferRequestMother {
 
-    public AddOfferRequestMother() throws InstantiationNotAllowed {
+    private AddOfferRequestMother() throws InstantiationNotAllowed {
         throw new InstantiationNotAllowed(this.getClass().getName());
     }
 
