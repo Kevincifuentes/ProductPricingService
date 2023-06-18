@@ -24,6 +24,8 @@ import java.util.stream.Stream;
 import java.util.Map.Entry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import com.inditex.hiring.infrastructure.Application;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

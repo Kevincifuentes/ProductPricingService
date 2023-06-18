@@ -1,13 +1,19 @@
-package com.inditex.hiring.controller.dto;
+package com.inditex.hiring.infrastructure.controller.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 
 /**
  * Use this POJO for offer service end point responses.
  */
 public class Offer implements Serializable {
+
+  private static final DateTimeFormatter DATE_EXPECTED_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH.mm.ss'Z'");
 
   private Long offerId;
 
@@ -117,4 +123,19 @@ public class Offer implements Serializable {
     this.currencyIso = currencyIso;
   }
 
+  public Instant getStartDateAsInstant() {
+    return parseDate(startDate);
+  }
+
+  public Instant getEndDateAsInstant() {
+    return parseDate(endDate);
+  }
+
+  private Instant parseDate(final String dateString) {
+    return Instant.from(
+            LocalDateTime.parse(dateString, DATE_EXPECTED_PATTERN)
+            .atZone(ZoneId.of("UTC"))
+            .toInstant()
+    );
+  }
 }
