@@ -1,4 +1,4 @@
-package com.inditex.hiring.objectmother.e2e.offer.models;
+package com.inditex.hiring.objectmother;
 
 import static java.lang.String.format;
 
