@@ -19,6 +19,7 @@ public class OfferJPAWriter implements OfferWriter {
 
     private OfferEntity buildOfferEntity(final Offer offer) {
         final var offerEntity = new OfferEntity();
+        offerEntity.setId(offer.getId());
         offerEntity.setBrandId(offer.getBrandId());
         offerEntity.setPriceListId(offer.getPriceListId());
         offerEntity.setStartDate(offer.getStartDate());

@@ -72,6 +72,7 @@ public class OfferController {
 
   private AddOfferCommand buildAddOfferCommand(final Offer offer) {
     return AddOfferCommand.builder()
+            .id(offer.getOfferId())
             .brandId(offer.getBrandId())
             .priceListId(offer.getPriceListId())
             .partNumber(offer.getProductPartnumber())

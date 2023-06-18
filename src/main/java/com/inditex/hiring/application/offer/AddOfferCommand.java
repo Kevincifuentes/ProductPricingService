@@ -10,6 +10,7 @@ import java.time.Instant;
 @Value
 @Builder
 public class AddOfferCommand implements Command {
+    long id;
     int brandId;
     long priceListId;
     Instant startDate;

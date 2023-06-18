@@ -1,6 +1,9 @@
 package com.inditex.hiring.infrastructure.persistence.jpa.read.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,7 +14,6 @@ import java.time.Instant;
 @Table(name="OFFER")
 public class OfferView {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "BRAND_ID")
     private Integer brandId;

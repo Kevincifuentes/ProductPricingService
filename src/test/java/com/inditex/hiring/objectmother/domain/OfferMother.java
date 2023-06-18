@@ -18,6 +18,7 @@ public final class OfferMother {
 
     public static Offer random() {
         return Offer.builder()
+                .id(FAKER.random().nextLong())
                 .brandId(FAKER.random().nextInt())
                 .priceListId(FAKER.random().nextLong())
                 .startDate(Instant.now())

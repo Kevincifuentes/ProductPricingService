@@ -20,6 +20,7 @@ public final class AddOfferRequestMother {
 
     public static AddOfferRequest random() {
         return new AddOfferRequest(
+                FAKER.random().nextLong(),
                 FAKER.random().nextInt(),
                 FAKER.random().nextLong(),
                 DATE_TIME_FORMATTER.format(Instant.now()),
