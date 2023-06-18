@@ -1,7 +1,7 @@
 package com.inditex.hiring.e2e.offer;
 
-import com.inditex.hiring.e2e.offer.models.request.AddOfferRequest;
 import com.inditex.hiring.infrastructure.Application;
+import com.inditex.hiring.infrastructure.controller.dto.Offer;
 import com.inditex.hiring.objectmother.e2e.offer.models.request.AddOfferRequestMother;
 import io.restassured.http.ContentType;
 import org.junit.Test;
@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
+import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -25,17 +27,42 @@ public class ProductPricingServiceE2ETest {
 
     @Test
     public void shouldCreateANewOffer() {
-        //given
-        AddOfferRequest addOfferRequest = AddOfferRequestMother.random();
+        //then
+        createOffer();
+    }
 
+    @Test
+    public void shouldFindById() {
+        //given
+        final var expectedId = createOffer();
+
+        final var offer =
+                given().
+                    contentType(ContentType.JSON).
+                when().
+                    port(port).
+                    get(format("/offer/%s", expectedId)).
+                then().
+                    log().ifValidationFails().
+                    statusCode(HttpStatus.OK.value())
+                    .extract()
+                    .as(Offer.class);
+
+        //then
+        assertThat(offer.getOfferId()).isEqualTo(expectedId);
+    }
+
+    private long createOffer() {
+        final var addOfferRequest = AddOfferRequestMother.random();
         given().
                 contentType(ContentType.JSON).
                 body(addOfferRequest).
-        when().
+                when().
                 port(port).
                 post("/offer").
-        then().
+                then().
                 log().ifValidationFails().
                 statusCode(HttpStatus.CREATED.value());
+        return addOfferRequest.offerId();
     }
 }

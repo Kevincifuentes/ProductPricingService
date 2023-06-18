@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import static com.inditex.hiring.TestSuiteUtils.FAKER;
 
 public final class AddOfferRequestMother {
+    private static final int MIN_LONG_VALUE = 1;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH.mm.ss'Z'")
             .withZone(ZoneId.of("UTC"));
@@ -20,9 +21,9 @@ public final class AddOfferRequestMother {
 
     public static AddOfferRequest random() {
         return new AddOfferRequest(
-                FAKER.random().nextLong(),
+                FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE),
                 FAKER.random().nextInt(),
-                FAKER.random().nextLong(),
+                FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE),
                 DATE_TIME_FORMATTER.format(Instant.now()),
                 DATE_TIME_FORMATTER.format(Instant.now()),
                 FAKER.random().nextInt(),
