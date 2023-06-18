@@ -24,7 +24,7 @@ public class AddOfferTest {
     private AddOfferHandler testSubject;
 
     @Test
-    public void should_add_offer() {
+    public void shouldAddOffer() {
         // given
         final var addOfferCommand = AddOfferCommandMother.random();
 

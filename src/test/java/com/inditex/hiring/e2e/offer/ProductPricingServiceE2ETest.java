@@ -27,7 +27,7 @@ public class ProductPricingServiceE2ETest {
     private Integer port;
 
     @Test
-    public void should_create_a_new_offer() {
+    public void shouldCreateANewOffer() {
         //given
         AddOfferRequest addOfferRequest = AddOfferRequestMother.random();
 

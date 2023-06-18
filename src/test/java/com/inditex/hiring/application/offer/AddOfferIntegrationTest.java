@@ -23,7 +23,7 @@ public class AddOfferIntegrationTest {
     private OfferReader offerReader;
 
     @Test
-    public void should_throw_not_found_exception() {
+    public void shouldThrowNotFoundException() {
         // given
         final var unknownCommand = new UnknownCommand();
 
@@ -35,7 +35,7 @@ public class AddOfferIntegrationTest {
     }
 
     @Test
-    public void should_add_offer() {
+    public void shouldAddOffer() {
         // given
         final var addOfferCommand = AddOfferCommandMother.random();
 
