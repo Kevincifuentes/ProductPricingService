@@ -1,4 +1,4 @@
-package com.inditex.hiring.infrastructure.persistence;
+package com.inditex.hiring.application.offer;
 
 import com.inditex.hiring.domain.Offer;
 

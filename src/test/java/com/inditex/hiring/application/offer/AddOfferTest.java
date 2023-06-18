@@ -1,6 +1,5 @@
 package com.inditex.hiring.application.offer;
 
-import com.inditex.hiring.infrastructure.persistence.OfferWriter;
 import com.inditex.hiring.objectmother.application.AddOfferCommandMother;
 import com.inditex.hiring.objectmother.domain.OfferMother;
 import org.junit.Test;
