@@ -1,4 +1,4 @@
-package com.inditex.hiring.application.offer;
+package com.inditex.hiring.application.offer.ports;
 
 import com.inditex.hiring.domain.Offer;
 
