@@ -16,11 +16,11 @@ public final class AddOfferCommandMother {
 
     public static AddOfferCommand random() {
         return AddOfferCommand.builder()
-                .brandId(FAKER.random().nextLong())
+                .brandId(FAKER.random().nextInt())
                 .priceListId(FAKER.random().nextLong())
                 .startDate(Instant.now())
                 .endDate(Instant.now())
-                .priority(FAKER.random().nextLong())
+                .priority(FAKER.random().nextInt())
                 .price(BigDecimal.valueOf(
                         FAKER.number().randomDouble(MAX_NUMBER_OF_DECIMALS_PRICE, MIN_VALUE_PRICE, MAX_VALUE_PRICE))
                 )

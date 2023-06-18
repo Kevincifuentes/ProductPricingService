@@ -1,7 +1,10 @@
 package com.inditex.hiring.infrastructure.persistence.jpa.write;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -13,10 +16,9 @@ import java.time.Instant;
 public class OfferEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "BRAND_ID")
-    private Long brandId;
+    private Integer brandId;
     @Column(name = "PRICE_LIST")
     private Long priceListId;
     @Column(name = "START_DATE")
@@ -24,7 +26,7 @@ public class OfferEntity {
     @Column(name = "END_DATE")
     private Instant endDate;
     @Column(name = "PRIORITY")
-    private Long priority;
+    private Integer priority;
     @Column(name = "PARTNUMBER")
     private String partNumber;
     @Column(name = "PRICE")

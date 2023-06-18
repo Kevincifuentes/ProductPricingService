@@ -40,6 +40,6 @@ public class GetOfferIntegrationTest {
 
         //then
         final var expectedView = OfferViewMother.from(offerEntity);
-        assertThat(result).contains(expectedView);
+        assertThat(result).isEqualTo(expectedView);
     }
 }

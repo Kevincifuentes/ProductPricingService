@@ -71,11 +71,11 @@ public final class OfferViewMother {
     public static OfferView random() {
         final var view = new OfferView();
         view.setId(FAKER.number().randomNumber());
-        view.setBrandId(FAKER.number().randomNumber());
+        view.setBrandId(FAKER.random().nextInt());
         view.setPriceListId(FAKER.number().randomNumber());
         view.setStartDate(Instant.now());
         view.setEndDate(Instant.now());
-        view.setPriority(FAKER.number().randomNumber());
+        view.setPriority(FAKER.random().nextInt());
         view.setPartNumber(String.valueOf(FAKER.number().randomNumber()));
         view.setPrice(BigDecimal.valueOf(
                 FAKER.number().randomDouble(MAX_NUMBER_OF_DECIMALS_PRICE, MIN_VALUE_PRICE, MAX_VALUE_PRICE))

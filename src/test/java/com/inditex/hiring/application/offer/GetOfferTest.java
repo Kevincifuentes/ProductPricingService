@@ -39,6 +39,6 @@ public class GetOfferTest {
 
         //then
         verify(offerReader).findById(offerId);
-        assertThat(result).contains(expectedOfferView);
+        assertThat(result).isEqualTo(expectedOfferView);
     }
 }

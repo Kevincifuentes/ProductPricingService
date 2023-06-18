@@ -18,11 +18,12 @@ public final class OfferMother {
 
     public static Offer random() {
         return Offer.builder()
-                .brandId(FAKER.random().nextLong())
+                .id(FAKER.random().nextLong())
+                .brandId(FAKER.random().nextInt())
                 .priceListId(FAKER.random().nextLong())
                 .startDate(Instant.now())
                 .endDate(Instant.now())
-                .priority(FAKER.random().nextLong())
+                .priority(FAKER.random().nextInt())
                 .price(BigDecimal.valueOf(
                         FAKER.number().randomDouble(MAX_NUMBER_OF_DECIMALS_PRICE, MIN_VALUE_PRICE, MAX_VALUE_PRICE)
                 ))
