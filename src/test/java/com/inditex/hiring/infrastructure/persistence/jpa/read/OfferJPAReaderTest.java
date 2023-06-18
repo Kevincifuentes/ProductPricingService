@@ -45,7 +45,7 @@ public class OfferJPAReaderTest {
         // given
         final var expectedId = FAKER.random().nextLong();
         final var expectedOfferView = OfferViewMother.random();
-        when(offerViewJPARepository.findById(expectedId)).thenReturn(of(OfferViewMother.random()));
+        when(offerViewJPARepository.findById(expectedId)).thenReturn(of(expectedOfferView));
 
         // when
         final var result = testSubject.findById(expectedId);

@@ -3,6 +3,7 @@ package com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.mode
 import com.inditex.hiring.application.offer.AddOfferCommand;
 import com.inditex.hiring.domain.Offer;
 import com.inditex.hiring.infrastructure.persistence.jpa.read.model.OfferView;
+import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferEntity;
 import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
 import java.time.Instant;
@@ -45,6 +46,21 @@ public final class OfferViewMother {
         view.setPartNumber(offer.getPartNumber());
         view.setPrice(offer.getPrice());
         view.setCurrencyISO(offer.getCurrencyISO());
+        return view;
+    }
+
+    public static OfferView from(final OfferEntity offerEntity) {
+        final var view = new OfferView();
+        view.setId(offerEntity.getId());
+        view.setBrandId(offerEntity.getBrandId());
+        view.setProductId(offerEntity.getProductId());
+        view.setPriceListId(offerEntity.getPriceListId());
+        view.setStartDate(offerEntity.getStartDate());
+        view.setEndDate(offerEntity.getEndDate());
+        view.setPriority(offerEntity.getPriority());
+        view.setPartNumber(offerEntity.getPartNumber());
+        view.setPrice(offerEntity.getPrice());
+        view.setCurrencyISO(offerEntity.getCurrencyISO());
         return view;
     }
 

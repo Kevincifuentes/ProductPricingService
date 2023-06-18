@@ -3,11 +3,16 @@ package com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.mode
 import com.inditex.hiring.domain.Offer;
 import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferEntity;
 import com.inditex.hiring.objectmother.InstantiationNotAllowed;
+import com.inditex.hiring.objectmother.domain.OfferMother;
 
 public class OfferEntityMother {
 
     private OfferEntityMother() throws InstantiationNotAllowed {
         throw new InstantiationNotAllowed(this.getClass().getName());
+    }
+
+    public static OfferEntity random() {
+        return from(OfferMother.random());
     }
 
     public static OfferEntity from(final Offer offer) {
