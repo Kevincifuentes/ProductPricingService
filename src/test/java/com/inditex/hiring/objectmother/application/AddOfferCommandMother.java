@@ -15,7 +15,6 @@ public final class AddOfferCommandMother {
     public static AddOfferCommand random() {
         return AddOfferCommand.builder()
                 .brandId(FAKER.random().nextLong())
-                .productId(FAKER.random().nextLong())
                 .priceListId(FAKER.random().nextLong())
                 .startDate(Instant.now())
                 .endDate(Instant.now())

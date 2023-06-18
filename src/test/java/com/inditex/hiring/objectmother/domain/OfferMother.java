@@ -17,7 +17,6 @@ public final class OfferMother {
     public static Offer random() {
         return Offer.builder()
                 .brandId(FAKER.random().nextLong())
-                .productId(FAKER.random().nextLong())
                 .priceListId(FAKER.random().nextLong())
                 .startDate(Instant.now())
                 .endDate(Instant.now())
@@ -31,7 +30,6 @@ public final class OfferMother {
     public static Offer from(final AddOfferCommand addOfferCommand) {
         return Offer.builder()
                 .brandId(addOfferCommand.getBrandId())
-                .productId(addOfferCommand.getProductId())
                 .priceListId(addOfferCommand.getPriceListId())
                 .startDate(addOfferCommand.getStartDate())
                 .endDate(addOfferCommand.getEndDate())

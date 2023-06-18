@@ -17,7 +17,6 @@ public final class AddOfferRequestMother {
         return new AddOfferRequest(
                 FAKER.random().nextLong(),
                 FAKER.random().nextLong(),
-                FAKER.random().nextLong(),
                 Instant.now(),
                 Instant.now(),
                 FAKER.random().nextLong(),

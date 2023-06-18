@@ -12,7 +12,6 @@ public class Offer {
     @Nullable
     long id;
     long brandId;
-    long productId;
     long priceListId;
     Instant startDate;
     Instant endDate;

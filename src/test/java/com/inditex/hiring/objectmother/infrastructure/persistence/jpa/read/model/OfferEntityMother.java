@@ -18,7 +18,6 @@ public class OfferEntityMother {
     public static OfferEntity from(final Offer offer) {
         final var entity = new OfferEntity();
         entity.setBrandId(offer.getBrandId());
-        entity.setProductId(offer.getProductId());
         entity.setPriceListId(offer.getPriceListId());
         entity.setStartDate(offer.getStartDate());
         entity.setEndDate(offer.getEndDate());

@@ -20,7 +20,6 @@ public class AddOfferHandler implements CommandHandler<AddOfferCommand> {
 
     private Offer buildOffer(final AddOfferCommand command) {
         return Offer.builder()
-                .productId(command.getProductId())
                 .brandId(command.getBrandId())
                 .priceListId(command.getPriceListId())
                 .startDate(command.getStartDate())

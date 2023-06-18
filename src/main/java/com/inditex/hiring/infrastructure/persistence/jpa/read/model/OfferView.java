@@ -14,8 +14,6 @@ public class OfferView {
     private Long id;
     @Column(name = "BRAND_ID")
     private Long brandId;
-    @Column(name = "PRODUCT_ID")
-    private Long productId;
     @Column(name = "PRICE_LIST")
     private Long priceListId;
     @Column(name = "START_DATE")

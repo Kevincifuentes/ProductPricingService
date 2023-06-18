@@ -15,7 +15,6 @@ public final class AddOfferResponseMother {
         return new AddOfferResponse(
                 FAKER.random().nextLong(),
                 addOfferRequest.brandId(),
-                addOfferRequest.productId(),
                 addOfferRequest.priceListId(),
                 addOfferRequest.startDate().toString(),
                 addOfferRequest.endDate().toString(),

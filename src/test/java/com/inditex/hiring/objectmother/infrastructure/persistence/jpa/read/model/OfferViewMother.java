@@ -23,7 +23,6 @@ public final class OfferViewMother {
     public static OfferView from(final AddOfferCommand addOfferCommand) {
         final var view = new OfferView();
         view.setBrandId(addOfferCommand.getBrandId());
-        view.setProductId(addOfferCommand.getProductId());
         view.setPriceListId(addOfferCommand.getPriceListId());
         view.setStartDate(addOfferCommand.getStartDate());
         view.setEndDate(addOfferCommand.getEndDate());
@@ -38,7 +37,6 @@ public final class OfferViewMother {
         final var view = new OfferView();
         view.setId(offer.getId());
         view.setBrandId(offer.getBrandId());
-        view.setProductId(offer.getProductId());
         view.setPriceListId(offer.getPriceListId());
         view.setStartDate(offer.getStartDate());
         view.setEndDate(offer.getEndDate());
@@ -53,7 +51,6 @@ public final class OfferViewMother {
         final var view = new OfferView();
         view.setId(offerEntity.getId());
         view.setBrandId(offerEntity.getBrandId());
-        view.setProductId(offerEntity.getProductId());
         view.setPriceListId(offerEntity.getPriceListId());
         view.setStartDate(offerEntity.getStartDate());
         view.setEndDate(offerEntity.getEndDate());
@@ -68,7 +65,6 @@ public final class OfferViewMother {
         final var view = new OfferView();
         view.setId(FAKER.number().randomNumber());
         view.setBrandId(FAKER.number().randomNumber());
-        view.setProductId(FAKER.number().randomNumber());
         view.setPriceListId(FAKER.number().randomNumber());
         view.setStartDate(Instant.now());
         view.setEndDate(Instant.now());
