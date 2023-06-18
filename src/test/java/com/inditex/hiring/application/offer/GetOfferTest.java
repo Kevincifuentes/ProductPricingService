@@ -11,6 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.inditex.hiring.TestSuiteUtils.FAKER;
+import static java.util.Optional.of;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,16 +27,18 @@ public class GetOfferTest {
     private GetOfferHandler testSubject;
 
     @Test
-    public void shouldAddOffer() {
+    public void shouldGetOfferById() {
         // given
         final var getOfferCommand = new GetOfferQuery(FAKER.random().nextLong());
         final var offerId = getOfferCommand.offerId();
-        when(offerReader.findById(offerId)).thenReturn(OfferViewMother.random());
+        final var expectedOfferView = OfferViewMother.random();
+        when(offerReader.findById(offerId)).thenReturn(of(expectedOfferView));
 
         //when
-        testSubject.ask(getOfferCommand);
+        final var result = testSubject.ask(getOfferCommand);
 
         //then
         verify(offerReader).findById(offerId);
+        assertThat(result).contains(expectedOfferView);
     }
 }
