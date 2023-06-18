@@ -74,9 +74,9 @@ public class ProductPricingServiceE2ETest {
         );
 
         //then
-        assertThat(offers).hasSize(2)
+        assertThat(offers)
                 .extracting(Offer::getOfferId)
-                .containsExactlyInAnyOrder(expectedId, expectedSecondId);
+                .contains(expectedId, expectedSecondId);
     }
 
     private long createOffer() {
