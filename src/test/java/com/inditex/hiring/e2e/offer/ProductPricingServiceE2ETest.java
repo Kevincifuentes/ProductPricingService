@@ -95,6 +95,24 @@ public class ProductPricingServiceE2ETest {
         offerNotFoundBy(expectedId);
     }
 
+    @Test
+    public void shouldDeleteAll() {
+        //given
+        shouldFindAll();
+
+        given().
+                contentType(ContentType.JSON).
+                when().
+                port(port).
+                delete("/offer").
+                then().
+                log().ifValidationFails().
+                statusCode(HttpStatus.OK.value());
+
+        //then
+        assertThat(findAllOffers()).isEmpty();
+    }
+
     private long createOffer() {
         final var addOfferRequest = AddOfferRequestMother.random();
         given().
