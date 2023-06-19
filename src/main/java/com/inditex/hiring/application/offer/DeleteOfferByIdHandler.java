@@ -13,6 +13,6 @@ public class DeleteOfferByIdHandler implements CommandHandler<DeleteOfferByIdCom
 
     @Override
     public void execute(final DeleteOfferByIdCommand command) {
-        // offerWriter.save(command.id());
+        offerWriter.deleteById(command.id());
     }
 }
