@@ -1,15 +1,15 @@
 package com.inditex.hiring.e2e.offer.models.request;
 
-import com.inditex.hiring.infrastructure.controller.dto.Offer;
+import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
 import lombok.Builder;
 
 import java.math.BigDecimal;
 
 @Builder(toBuilder = true)
 public record AddOfferRequest(long offerId, int brandId, long priceListId, String startDate, String endDate,
-                              int priority, String partNumber, BigDecimal price, String currencyISO) {
+                              int priority, String productPartnumber, BigDecimal price, String currencyIso) {
 
-    public Offer toOffer() {
-        return new Offer(offerId, brandId, startDate, endDate, priceListId, partNumber, priority, price, currencyISO);
+    public OfferByPartNumber toOfferByPartNumber() {
+        return new OfferByPartNumber(startDate, endDate, price, currencyIso);
     }
 }

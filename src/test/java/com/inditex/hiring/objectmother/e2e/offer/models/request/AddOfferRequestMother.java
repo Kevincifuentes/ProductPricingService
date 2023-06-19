@@ -4,6 +4,7 @@ import com.inditex.hiring.e2e.offer.models.request.AddOfferRequest;
 import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,7 @@ public final class AddOfferRequestMother {
                 DATE_TIME_FORMATTER.format(Instant.now()),
                 FAKER.random().nextInt(),
                 FAKER.commerce().brand(),
-                BigDecimal.valueOf(FAKER.random().nextDouble()),
+                BigDecimal.valueOf(FAKER.random().nextDouble()).setScale(2, RoundingMode.CEILING),
                 FAKER.currency().code()
         );
     }

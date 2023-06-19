@@ -3,6 +3,7 @@ package com.inditex.hiring.e2e.offer;
 import com.inditex.hiring.e2e.offer.models.request.AddOfferRequest;
 import com.inditex.hiring.infrastructure.Application;
 import com.inditex.hiring.infrastructure.controller.dto.Offer;
+import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
 import com.inditex.hiring.objectmother.e2e.offer.models.request.AddOfferRequestMother;
 import io.restassured.http.ContentType;
 import org.junit.After;
@@ -100,18 +101,23 @@ public class ProductPricingServiceE2ETest {
                         contentType(ContentType.JSON).
                         when().
                         port(port).
-                        get("/offer").
+                        get(
+                                format(
+                                        "/brand/%s/partnumber/%s/offer",
+                                        secondOfferOnTimeline.brandId(),
+                                        secondOfferOnTimeline.productPartnumber()
+                                )).
                         then().
                         log().ifValidationFails().
                         statusCode(HttpStatus.OK.value())
                         .extract()
-                        .as(Offer[].class)
+                        .as(OfferByPartNumber[].class)
         );
 
         //then
         final var expectedOffers = Stream.of(
                 firstOfferOnTimeline, secondOfferOnTimeline, thirdOfferOnTimeLine
-        ).map(AddOfferRequest::toOffer).toList();
+        ).map(AddOfferRequest::toOfferByPartNumber).toList();
         assertThat(offersTimetable).isEqualTo(expectedOffers);
     }
 
