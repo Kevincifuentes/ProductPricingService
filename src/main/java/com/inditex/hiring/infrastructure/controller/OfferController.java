@@ -70,6 +70,13 @@ public class OfferController {
     return new ArrayList<>();
   }
 
+  //...
+  @ExceptionHandler(OfferNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public void handleException() {
+    //
+  }
+
   private AddOfferCommand buildAddOfferCommand(final Offer offer) {
     return AddOfferCommand.builder()
             .id(offer.getOfferId())
