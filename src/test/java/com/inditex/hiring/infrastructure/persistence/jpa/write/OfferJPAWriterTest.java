@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.inditex.hiring.TestSuiteUtils.FAKER;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,7 +24,7 @@ public class OfferJPAWriterTest {
     private OfferJPAWriter testSubject;
 
     @Test
-    public void shouldFindAll() {
+    public void shouldSave() {
         // given
         final var offer = OfferMother.random();
 
@@ -33,5 +34,17 @@ public class OfferJPAWriterTest {
         //then
         final var expectedOfferEntity = OfferEntityMother.from(offer);
         verify(offerJPARepository).save(expectedOfferEntity);
+    }
+
+    @Test
+    public void shouldDeleteById() {
+        // given
+        final var offerId = FAKER.random().nextLong();
+
+        // when
+        testSubject.deleteById(offerId);
+
+        //then
+        verify(offerJPARepository).deleteById(offerId);
     }
 }

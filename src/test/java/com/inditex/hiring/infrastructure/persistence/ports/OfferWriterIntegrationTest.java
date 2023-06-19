@@ -46,5 +46,19 @@ public class OfferWriterIntegrationTest {
                 .containsOnly(OfferViewMother.from(offer));
     }
 
+    @Test
+    public void testDeleteOfferById() {
+        // given
+        final var offer = OfferMother.random();
+        testSubject.save(offer);
+        assertThat(offerReader.findAll()).hasSize(1);
+
+        // when
+        testSubject.deleteById(offer.getId());
+
+        // then
+        assertThat(offerReader.findAll()).isEmpty();
+    }
+
 
 }
