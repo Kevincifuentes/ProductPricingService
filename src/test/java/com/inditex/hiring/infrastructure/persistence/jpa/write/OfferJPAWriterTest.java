@@ -47,4 +47,13 @@ public class OfferJPAWriterTest {
         //then
         verify(offerJPARepository).deleteById(offerId);
     }
+
+    @Test
+    public void shouldDeleteAll() {
+        // when
+        testSubject.deleteAll();
+
+        //then
+        verify(offerJPARepository).deleteAll();
+    }
 }
