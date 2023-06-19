@@ -1,8 +1,8 @@
 package com.inditex.hiring.application.offer;
 
 import com.inditex.hiring.application.cqrs.Command;
-import com.inditex.hiring.application.cqrs.CommandBus;
 import com.inditex.hiring.application.cqrs.CommandNotFoundException;
+import com.inditex.hiring.application.cqrs.SpringCommandBus;
 import com.inditex.hiring.domain.ports.OfferReader;
 import com.inditex.hiring.infrastructure.Application;
 import com.inditex.hiring.infrastructure.persistence.jpa.write.OfferJPARepository;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 public class AddOfferIntegrationTest {
 
     @Autowired
-    private CommandBus testSubject;
+    private SpringCommandBus testSubject;
 
     @Autowired
     private OfferReader offerReader;
