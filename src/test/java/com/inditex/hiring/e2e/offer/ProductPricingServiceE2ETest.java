@@ -60,14 +60,7 @@ public class ProductPricingServiceE2ETest {
         //given
         final var expectedId = FAKER.number().randomNumber();
 
-        given().
-            contentType(ContentType.JSON).
-        when().
-            port(port).
-            get(format("/offer/%s", expectedId)).
-        then().
-            log().ifValidationFails().
-            statusCode(HttpStatus.NOT_FOUND.value());
+        offerNotFoundBy(expectedId);
     }
 
     @Test
@@ -99,8 +92,7 @@ public class ProductPricingServiceE2ETest {
             statusCode(HttpStatus.OK.value());
 
         //then
-        final var offers = findAllOffers();
-        assertThat(offers).isEmpty();
+        offerNotFoundBy(expectedId);
     }
 
     private long createOffer() {
@@ -130,5 +122,16 @@ public class ProductPricingServiceE2ETest {
                         .extract()
                         .as(Offer[].class)
         );
+    }
+
+    private void offerNotFoundBy(long expectedId) {
+        given().
+                contentType(ContentType.JSON).
+                when().
+                port(port).
+                get(format("/offer/%s", expectedId)).
+                then().
+                log().ifValidationFails().
+                statusCode(HttpStatus.NOT_FOUND.value());
     }
 }
