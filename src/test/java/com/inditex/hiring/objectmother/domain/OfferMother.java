@@ -6,11 +6,14 @@ import com.inditex.hiring.objectmother.InstantiationNotAllowed;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import static com.inditex.hiring.TestSuiteUtils.FAKER;
 import static com.inditex.hiring.objectmother.infrastructure.persistence.jpa.read.model.OfferViewMother.*;
 
 public final class OfferMother {
+
+    private static final int ONE_DAY = 1;
 
     private OfferMother() throws InstantiationNotAllowed {
         throw new InstantiationNotAllowed(this.getClass().getName());
@@ -42,6 +45,22 @@ public final class OfferMother {
                 .partNumber(addOfferCommand.getPartNumber())
                 .price(addOfferCommand.getPrice())
                 .currencyISO(addOfferCommand.getCurrencyISO())
+                .build();
+    }
+
+    public static Offer afterNewOffer(final Offer offer) {
+        final var startDate = offer.getEndDate().plus(ONE_DAY, ChronoUnit.DAYS);
+        final var endDate = startDate.plus(ONE_DAY, ChronoUnit.DAYS);
+        return Offer.builder()
+                .id(FAKER.random().nextLong())
+                .brandId(offer.getBrandId())
+                .priceListId(offer.getPriceListId())
+                .startDate(startDate)
+                .endDate(endDate)
+                .priority(offer.getPriority())
+                .partNumber(offer.getPartNumber())
+                .price(offer.getPrice())
+                .currencyISO(offer.getCurrencyISO())
                 .build();
     }
 }
