@@ -2,7 +2,6 @@ package com.inditex.hiring.infrastructure.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inditex.hiring.infrastructure.persistence.jpa.read.model.OfferView;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,18 +15,15 @@ import java.time.format.DateTimeFormatter;
  */
 public class Offer implements Serializable {
 
-  private static final String DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH.mm.ss'Z'";
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)
+  private static final DateTimeFormatter DATE_EXPECTED_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH.mm.ss'Z'")
           .withZone(ZoneId.of("UTC"));
 
   private Long offerId;
 
   private Integer brandId;
 
-  @DateTimeFormat(pattern = DATE_TIME_PATTERN)
   private String startDate;
 
-  @DateTimeFormat(pattern = DATE_TIME_PATTERN)
   private String endDate;
 
   private Long priceListId;
@@ -155,10 +151,10 @@ public class Offer implements Serializable {
   }
 
   private static Instant parseDate(final String dateString) {
-    return Instant.from(DATE_TIME_FORMATTER.parse(dateString));
+    return Instant.from(DATE_EXPECTED_PATTERN.parse(dateString));
   }
 
   private static String formatDate(final Instant instant) {
-    return DATE_TIME_FORMATTER.format(instant);
+    return DATE_EXPECTED_PATTERN.format(instant);
   }
 }
