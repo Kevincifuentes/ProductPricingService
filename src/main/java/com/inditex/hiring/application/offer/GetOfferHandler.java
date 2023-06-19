@@ -13,7 +13,7 @@ public class GetOfferHandler implements QueryHandler<GetOfferQuery, OfferView> {
     private final OfferReader offerReader;
 
     @Override
-    public OfferView ask(GetOfferQuery query) {
+    public OfferView ask(final GetOfferQuery query) {
         return offerReader.findById(query.offerId())
                 .orElseThrow(() -> new OfferNotFoundException(query.offerId()));
     }

@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ public class OfferController {
   private final GetOfferHandler getOfferHandler;
   private final FindAllOffersHandler findAllOffersHandler;
   private final DeleteOfferByIdHandler deleteOfferByIdHandler;
+  private final FindOffersByCriteriaHandler findOffersByCriteriaHandler;
 
   //TODO: Refactor endpoints to use /offers plural instead, using singular doesn't comply with REST standards.
   @PostMapping(value = "/offer", consumes = "application/json")
@@ -61,10 +61,24 @@ public class OfferController {
 
   @GetMapping(value = "brand/{brandId}/partnumber/{partnumber}/offer")
   @ResponseStatus(HttpStatus.OK)
-  public List<OfferByPartNumber> getOfferByPartNumber(Integer brandId, String partnumber) {
+  public List<OfferByPartNumber> getOfferByPartNumber(
+          @PathVariable final Integer brandId, @PathVariable final String partnumber
+  ) {
+    return findOffersByCriteriaHandler.ask(buildFindOfferByCriteriaQuery(brandId, partnumber))
+            .stream()
+            .map(OfferByPartNumber::from)
+            .toList();
+  }
 
-    //TODO implement it!.
-    return new ArrayList<>();
+  private static FindOffersByCriteriaQuery buildFindOfferByCriteriaQuery(Integer brandId, String partnumber) {
+    final var offerCriteria = OfferCriteria.builder()
+            .brandId(brandId)
+            .partNumber(partnumber)
+            .build();
+    return FindOffersByCriteriaQuery.builder()
+            .offerCriteria(offerCriteria)
+            .shouldSortByStartEndDate(true)
+            .build();
   }
 
   //...

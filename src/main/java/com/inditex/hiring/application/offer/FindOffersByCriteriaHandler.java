@@ -10,12 +10,12 @@ import java.util.List;
 
 @AllArgsConstructor
 @Component
-public class FindAllOffersHandler implements QueryHandler<FindAllOffersQuery, List<OfferView>> {
+public class FindOffersByCriteriaHandler implements QueryHandler<FindOffersByCriteriaQuery, List<OfferView>> {
 
     private final OfferReader offerReader;
 
     @Override
-    public List<OfferView> ask(final FindAllOffersQuery query) {
-        return offerReader.findAll();
+    public List<OfferView> ask(final FindOffersByCriteriaQuery query) {
+        return offerReader.findByCriteria(query.getOfferCriteria());
     }
 }
