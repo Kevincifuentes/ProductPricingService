@@ -31,7 +31,7 @@ public final class OfferViewMother {
         view.setEndDate(addOfferCommand.getEndDate());
         view.setPriority(addOfferCommand.getPriority());
         view.setPartNumber(addOfferCommand.getPartNumber());
-        view.setPrice(addOfferCommand.getPrice());
+        view.setPrice(getPriceOnMinimumScale(addOfferCommand.getPrice()));
         view.setCurrencyISO(addOfferCommand.getCurrencyISO());
         return view;
     }
