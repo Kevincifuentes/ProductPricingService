@@ -1,5 +1,5 @@
 package com.inditex.hiring.application.cqrs;
 
-public interface Query {
+public interface Query<T> {
 
 }

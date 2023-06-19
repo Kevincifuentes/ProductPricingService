@@ -1,6 +1,7 @@
 package com.inditex.hiring.infrastructure.controller;
 
 import com.inditex.hiring.application.cqrs.CommandBus;
+import com.inditex.hiring.application.cqrs.QueryBus;
 import com.inditex.hiring.application.offer.*;
 import com.inditex.hiring.infrastructure.controller.dto.Offer;
 import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
@@ -19,11 +20,7 @@ import java.util.List;
 public class OfferController {
 
   private final CommandBus commandBus;
-  //TODO: Create also a QueryBus to handle all queries
-  private final GetOfferHandler getOfferHandler;
-  private final FindAllOffersHandler findAllOffersHandler;
-  private final DeleteOfferByIdHandler deleteOfferByIdHandler;
-  private final FindOffersByCriteriaHandler findOffersByCriteriaHandler;
+  private final QueryBus queryBus;
 
   //TODO: Refactor endpoints to use /offers plural instead, using singular doesn't comply with REST standards.
   @PostMapping(value = "/offer", consumes = "application/json")
@@ -41,13 +38,13 @@ public class OfferController {
   @DeleteMapping(value = "/offer/{id}")
   @ResponseStatus(HttpStatus.OK)
   public void deleteOfferById(@PathVariable final Long id) {
-    deleteOfferByIdHandler.execute(new DeleteOfferByIdCommand(id));
+    commandBus.execute(new DeleteOfferByIdCommand(id));
   }
 
   @GetMapping(value = "/offer")
   @ResponseStatus(HttpStatus.OK)
   public List<Offer> getAllOffers() {
-    return findAllOffersHandler.ask(new FindAllOffersQuery())
+    return queryBus.ask(new FindAllOffersQuery())
             .stream()
             .map(Offer::from)
             .toList();
@@ -56,7 +53,7 @@ public class OfferController {
   @GetMapping(value = "/offer/{offerId}")
   @ResponseStatus(HttpStatus.OK)
   public Offer getOfferById(@PathVariable final Long offerId) {
-    return Offer.from(getOfferHandler.ask(new GetOfferQuery(offerId)));
+    return Offer.from(queryBus.ask(new GetOfferQuery(offerId)));
   }
 
   @GetMapping(value = "brand/{brandId}/partnumber/{partnumber}/offer")
@@ -64,7 +61,7 @@ public class OfferController {
   public List<OfferByPartNumber> getOfferByPartNumber(
           @PathVariable final Integer brandId, @PathVariable final String partnumber
   ) {
-    return findOffersByCriteriaHandler.ask(buildFindOfferByCriteriaQuery(brandId, partnumber))
+    return queryBus.ask(buildFindOfferByCriteriaQuery(brandId, partnumber))
             .stream()
             .map(OfferByPartNumber::from)
             .toList();
