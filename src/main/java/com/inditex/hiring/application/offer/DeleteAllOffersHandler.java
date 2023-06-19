@@ -12,7 +12,7 @@ public class DeleteAllOffersHandler implements CommandHandler<DeleteAllOffersCom
     private final OfferWriter offerWriter;
 
     @Override
-    public void execute(DeleteAllOffersCommand command) {
+    public void execute(final DeleteAllOffersCommand command) {
         offerWriter.deleteAll();
     }
 }

@@ -15,7 +15,7 @@ public class FindAllOffersHandler implements QueryHandler<FindAllOffersQuery, Li
     private final OfferReader offerReader;
 
     @Override
-    public List<OfferView> ask(FindAllOffersQuery query) {
+    public List<OfferView> ask(final FindAllOffersQuery query) {
         return offerReader.findAll();
     }
 }
