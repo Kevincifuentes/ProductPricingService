@@ -17,6 +17,11 @@ public class OfferJPAWriter implements OfferWriter {
         offerJPARepository.save(offerEntity);
     }
 
+    @Override
+    public void deleteById(long offerId) {
+        offerJPARepository.deleteById(offerId);
+    }
+
     private OfferEntity buildOfferEntity(final Offer offer) {
         final var offerEntity = new OfferEntity();
         offerEntity.setId(offer.getId());

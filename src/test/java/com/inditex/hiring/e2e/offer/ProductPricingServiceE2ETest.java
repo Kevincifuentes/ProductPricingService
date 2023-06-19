@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static com.inditex.hiring.TestSuiteUtils.FAKER;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,12 +56,61 @@ public class ProductPricingServiceE2ETest {
     }
 
     @Test
+    public void shouldFindByIdNotFound() {
+        //given
+        final var expectedId = FAKER.number().randomNumber();
+
+        offerNotFoundBy(expectedId);
+    }
+
+    @Test
     public void shouldFindAll() {
         //given
         final var expectedId = createOffer();
         final var expectedSecondId = createOffer();
 
-        final var offers = List.of(
+        final var offers = findAllOffers();
+
+        //then
+        assertThat(offers)
+                .extracting(Offer::getOfferId)
+                .contains(expectedId, expectedSecondId);
+    }
+
+    @Test
+    public void shouldDeleteById() {
+        //given
+        final var expectedId = createOffer();
+
+        given().
+            contentType(ContentType.JSON).
+        when().
+            port(port).
+            delete(format("/offer/%s", expectedId)).
+        then().
+            log().ifValidationFails().
+            statusCode(HttpStatus.OK.value());
+
+        //then
+        offerNotFoundBy(expectedId);
+    }
+
+    private long createOffer() {
+        final var addOfferRequest = AddOfferRequestMother.random();
+        given().
+            contentType(ContentType.JSON).
+            body(addOfferRequest).
+        when().
+            port(port).
+            post("/offer").
+        then().
+            log().ifValidationFails().
+            statusCode(HttpStatus.CREATED.value());
+        return addOfferRequest.offerId();
+    }
+
+    private List<Offer> findAllOffers() {
+        return List.of(
                 given().
                         contentType(ContentType.JSON).
                         when().
@@ -72,24 +122,16 @@ public class ProductPricingServiceE2ETest {
                         .extract()
                         .as(Offer[].class)
         );
-
-        //then
-        assertThat(offers)
-                .extracting(Offer::getOfferId)
-                .contains(expectedId, expectedSecondId);
     }
 
-    private long createOffer() {
-        final var addOfferRequest = AddOfferRequestMother.random();
+    private void offerNotFoundBy(long expectedId) {
         given().
                 contentType(ContentType.JSON).
-                body(addOfferRequest).
                 when().
                 port(port).
-                post("/offer").
+                get(format("/offer/%s", expectedId)).
                 then().
                 log().ifValidationFails().
-                statusCode(HttpStatus.CREATED.value());
-        return addOfferRequest.offerId();
+                statusCode(HttpStatus.NOT_FOUND.value());
     }
 }

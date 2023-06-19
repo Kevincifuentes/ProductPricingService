@@ -20,14 +20,15 @@ import java.util.List;
 public class OfferController {
 
   private final CommandBus commandBus;
-  //TODO: Create also a QueryBus.
+  //TODO: Create also a QueryBus to handle all queries
   private final GetOfferHandler getOfferHandler;
   private final FindAllOffersHandler findAllOffersHandler;
+  private final DeleteOfferByIdHandler deleteOfferByIdHandler;
 
   //TODO: Refactor endpoints to use /offers plural instead, using singular doesn't comply with REST standards.
   @PostMapping(value = "/offer", consumes = "application/json")
   @ResponseStatus(HttpStatus.CREATED)
-  public void createNewOffer(@RequestBody @Valid Offer offer) {
+  public void createNewOffer(@RequestBody @Valid final Offer offer) {
     commandBus.execute(buildAddOfferCommand(offer));
   }
 
@@ -41,10 +42,8 @@ public class OfferController {
 
   @DeleteMapping(value = "/offer/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteOfferById(@RequestParam Long id) {
-
-    //TODO implement it!.
-
+  public void deleteOfferById(@PathVariable final Long id) {
+    deleteOfferByIdHandler.execute(new DeleteOfferByIdCommand(id));
   }
 
   @GetMapping(value = "/offer")
@@ -68,6 +67,13 @@ public class OfferController {
 
     //TODO implement it!.
     return new ArrayList<>();
+  }
+
+  //...
+  @ExceptionHandler(OfferNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public void handleException() {
+    //
   }
 
   private AddOfferCommand buildAddOfferCommand(final Offer offer) {
