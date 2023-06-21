@@ -9,11 +9,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface OfferViewJPARepository extends JpaRepository<OfferView, Long>, JpaSpecificationExecutor<OfferView> {
 
     static Specification<OfferView> hasBrandId(final long brandId) {
-        return (offerView, cq, cb) -> cb.equal(offerView.get("brandId"), brandId);
+        return (offerView, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(offerView.get("brandId"), brandId);
     }
 
     static Specification<OfferView> hasPartNumber(final String partNumber) {
-        return (offerView, cq, cb) -> cb.equal(offerView.get("partNumber"), partNumber);
+        return (offerView, criteriaQuery, cb) -> cb.equal(offerView.get("partNumber"), partNumber);
     }
 
     static Sort orderByDates() {

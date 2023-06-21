@@ -28,7 +28,7 @@ public class DeleteAllOffersIntegrationTest {
     }
 
     @Test
-    public void shouldGetOffer() {
+    public void shouldDeleteAllOffers() {
         // given
         final var offerEntity = OfferEntityMother.random();
         offerJPARepository.save(offerEntity);

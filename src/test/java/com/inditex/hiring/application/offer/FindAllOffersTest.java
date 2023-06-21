@@ -26,7 +26,7 @@ public class FindAllOffersTest {
     private FindAllOffersHandler testSubject;
 
     @Test
-    public void shouldGetOfferById() {
+    public void shouldFindAllOffers() {
         // given
         final var findAllOffersQuery = new FindAllOffersQuery();
         final var expectedOfferViews = of(OfferViewMother.random());
