@@ -22,7 +22,7 @@ public class DeleteAllOffersTest {
     private DeleteAllOffersHandler testSubject;
 
     @Test
-    public void shouldAddOffer() {
+    public void shouldDeleteOffer() {
         // given
         final var deleteAllOffersCommand = new DeleteAllOffersCommand();
 

@@ -33,7 +33,7 @@ public class DeleteOfferByIdIntegrationTest {
     }
 
     @Test
-    public void shouldAddOffer() {
+    public void shouldDeleteOfferById() {
         // given
         final var offerEntity = OfferEntityMother.random();
         offerJPARepository.save(offerEntity);
