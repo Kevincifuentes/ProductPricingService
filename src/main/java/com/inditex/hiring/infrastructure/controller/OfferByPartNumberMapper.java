@@ -3,6 +3,7 @@ package com.inditex.hiring.infrastructure.controller;
 import com.inditex.hiring.infrastructure.controller.dto.Interval;
 import com.inditex.hiring.infrastructure.controller.dto.OfferByPartNumber;
 import com.inditex.hiring.infrastructure.persistence.jpa.read.model.OfferView;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -11,15 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class OfferByPartNumberMapper {
 
-    private OfferByPartNumberMapper() {
-        throw new UnsupportedOperationException("This class should not be instantiated");
-    }
-
     public static List<OfferByPartNumber> buildOfferByPartNumbers(final List<OfferView> offerViews) {
-        final var allInstants = getAllInstantsSorted(offerViews);
+        final var allInstants = getAllDistinctInstantsSorted(offerViews);
         return getOfferByPartNumbersByIntervals(allInstants, offerViews);
     }
 
@@ -34,11 +33,15 @@ public class OfferByPartNumberMapper {
     }
 
     private static List<Map.Entry<Interval, List<OfferView>>> getIntervalsByAffectedOfferViews(List<Instant> allDates, List<OfferView> offerViews) {
-        return IntStream.range(0, allDates.size() - 1)
-                .mapToObj(index -> buildInterval(allDates.get(index), allDates.get(index + 1)))
-                .map(interval -> findIntervalToAffectedOfferViewMap(interval, offerViews))
+        final var intervals = buildIntervalsSequentially(allDates);
+        return intervals.map(interval -> findIntervalToAffectedOfferViewMap(interval, offerViews))
                 .flatMap(map -> map.entrySet().stream())
                 .toList();
+    }
+
+    private static Stream<Interval> buildIntervalsSequentially(final List<Instant> allDates) {
+        return IntStream.range(0, allDates.size() - 1)
+                .mapToObj(index -> buildInterval(allDates.get(index), allDates.get(index + 1)));
     }
 
     private static Optional<OfferByPartNumber> findOfferByPartNumber(
@@ -48,7 +51,13 @@ public class OfferByPartNumberMapper {
         final var endDate = buildEndDate(interval, allIntervalsByOfferViews);
         return entry.getValue().stream()
                 .max(Comparator.comparing(OfferView::getPriority))
-                .map(offerView -> OfferByPartNumber.from(interval.startDate(), endDate, offerView.getPrice(), offerView.getCurrencyISO()));
+                .map(offerView -> buildOfferByPartNumber(interval, endDate, offerView));
+    }
+
+    private static OfferByPartNumber buildOfferByPartNumber(
+            final Interval interval, final Instant endDate, final OfferView offerView
+    ) {
+        return OfferByPartNumber.from(interval.startDate(), endDate, offerView.getPrice(), offerView.getCurrencyISO());
     }
 
     private static Instant buildEndDate(final Interval interval, final List<Map.Entry<Interval, List<OfferView>>> allIntervalsByOfferViews) {
@@ -90,7 +99,7 @@ public class OfferByPartNumberMapper {
                 && (end.isBefore(endRange) || end.equals(endRange));
     }
 
-    private static List<Instant> getAllInstantsSorted(final List<OfferView> offerViews) {
+    private static List<Instant> getAllDistinctInstantsSorted(final List<OfferView> offerViews) {
         return offerViews.stream()
                 .map(OfferView::getBothDates)
                 .flatMap(List::stream)
