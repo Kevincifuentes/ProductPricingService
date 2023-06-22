@@ -14,6 +14,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -124,35 +126,11 @@ public class ProductPricingServiceE2ETest {
     }
 
     @Test
-    public void shouldFindAllAsTimetableProvidedExample() {
+    public void shouldFindAllAsTimetableProvidedStaticExample() {
         //given
-        final var firstOfferOnTimeline = AddOfferRequestMother.randomWith(
-                "2020-06-14T00.00.00Z",
-                "2020-12-31T23.59.59Z",
-                0
-        );
-        createOffer(firstOfferOnTimeline);
-        final var secondOfferOnTimeline = AddOfferRequestMother.with(
-                firstOfferOnTimeline,
-                "2020-06-14T15.00.00Z",
-                "2020-06-14T18.30.00Z",
-                1
-        );
-        createOffer(secondOfferOnTimeline);
-        final var thirdOfferOnTimeLine = AddOfferRequestMother.with(
-                firstOfferOnTimeline,
-                "2020-06-15T00.00.00Z",
-                "2020-06-15T11.00.00Z",
-                1
-        );
-        createOffer(thirdOfferOnTimeLine);
-        final var forthOfferOnTimeLine = AddOfferRequestMother.with(
-                firstOfferOnTimeline,
-                "2020-06-15T16.00.00Z",
-                "2020-12-31T23.59.59Z",
-                1
-        );
-        createOffer(forthOfferOnTimeLine);
+        final var givenOffersOnTimeline = givenStaticOffersFromTimelineExample();
+        givenOffersOnTimeline.forEach(this::createOffer);
+        final var anyOfferOnTimeLine = givenOffersOnTimeline.stream().findAny().orElseThrow();
 
         final var offersTimetable = List.of(
                 given().
@@ -162,8 +140,8 @@ public class ProductPricingServiceE2ETest {
                         get(
                                 format(
                                         "/brand/%s/partnumber/%s/offer",
-                                        secondOfferOnTimeline.brandId(),
-                                        secondOfferOnTimeline.productPartnumber()
+                                        anyOfferOnTimeLine.brandId(),
+                                        anyOfferOnTimeLine.productPartnumber()
                                 )).
                         then().
                         log().ifValidationFails().
@@ -173,7 +151,11 @@ public class ProductPricingServiceE2ETest {
         );
 
         //then
-        assertThat(offersTimetable).hasSize(6);
+        final var expectedOfferByPartNumbers = buildExpectedStaticOfferByPartNumber();
+        assertThat(offersTimetable)
+                .hasSize(6)
+                .isEqualTo(expectedOfferByPartNumbers);
+
     }
 
     @Test
@@ -259,4 +241,88 @@ public class ProductPricingServiceE2ETest {
                 log().ifValidationFails().
                 statusCode(HttpStatus.OK.value());
     }
+
+    private List<AddOfferRequest> givenStaticOffersFromTimelineExample() {
+        //TODO: Refactor to use json file
+        final var firstOfferOnTimeline = AddOfferRequestMother.randomEurWith(
+                "2020-06-14T00.00.00Z",
+                "2020-12-31T23.59.59Z",
+                0,
+                BigDecimal.valueOf(35.50)
+        );
+        return List.of(
+                AddOfferRequestMother.withEurCurrency(
+                        firstOfferOnTimeline,
+                        "2020-06-14T15.00.00Z",
+                        "2020-06-14T18.30.00Z",
+                        1,
+                        BigDecimal.valueOf(25.45)
+                ),
+                AddOfferRequestMother.withEurCurrency(
+                        firstOfferOnTimeline,
+                        "2020-06-15T00.00.00Z",
+                        "2020-06-15T11.00.00Z",
+                        1,
+                        BigDecimal.valueOf(30.50)
+                ),
+                AddOfferRequestMother.withEurCurrency(
+                        firstOfferOnTimeline,
+                        "2020-06-15T16.00.00Z",
+                        "2020-12-31T23.59.59Z",
+                        1,
+                        BigDecimal.valueOf(38.95)
+                ),
+                firstOfferOnTimeline
+        );
+    }
+
+
+    private static List<OfferByPartNumber> buildExpectedStaticOfferByPartNumber() {
+        //TODO: Refactor this to use the json file instead
+        return Stream.of(
+                new OfferByPartNumber(
+                        "2020-06-14T00:00:00Z",
+                        "2020-06-14T14:59:59Z",
+                        BigDecimal.valueOf(35.50).setScale(2, RoundingMode.CEILING),
+                        "EUR"
+
+                ),
+                new OfferByPartNumber(
+                        "2020-06-14T15:00:00Z",
+                        "2020-06-14T18:29:59Z",
+                        BigDecimal.valueOf(25.45).setScale(2, RoundingMode.CEILING),
+                        "EUR"
+
+                ),
+                new OfferByPartNumber(
+                        "2020-06-14T18:30:00Z",
+                        "2020-06-14T23:59:59Z",
+                        BigDecimal.valueOf(35.50).setScale(2, RoundingMode.CEILING),
+                        "EUR"
+
+                ),
+                new OfferByPartNumber(
+                        "2020-06-15T00:00:00Z",
+                        "2020-06-15T10:59:59Z",
+                        BigDecimal.valueOf(30.50).setScale(2, RoundingMode.CEILING),
+                        "EUR"
+
+                ),
+                new OfferByPartNumber(
+                        "2020-06-15T11:00:00Z",
+                        "2020-06-15T15:59:59Z",
+                        BigDecimal.valueOf(35.50).setScale(2, RoundingMode.CEILING),
+                        "EUR"
+
+                ),
+                new OfferByPartNumber(
+                        "2020-06-15T16:00:00Z",
+                        "2020-12-31T23:59:59Z",
+                        BigDecimal.valueOf(38.95),
+                        "EUR"
+
+                )
+        ).toList();
+    }
+
 }
