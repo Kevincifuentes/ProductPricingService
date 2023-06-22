@@ -29,7 +29,7 @@ public final class AddOfferRequestMother {
                 FAKER.random().nextInt(),
                 FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE),
                 DATE_TIME_FORMATTER.format(Instant.now()),
-                DATE_TIME_FORMATTER.format(Instant.now()),
+                DATE_TIME_FORMATTER.format(Instant.now().plus(ONE, ChronoUnit.DAYS)),
                 FAKER.random().nextInt(),
                 FAKER.commerce().brand(),
                 BigDecimal.valueOf(FAKER.random().nextDouble()).setScale(2, RoundingMode.CEILING),

@@ -116,8 +116,10 @@ public class ProductPricingServiceE2ETest {
 
         //then
         final var expectedOffers = Stream.of(
-                firstOfferOnTimeline, secondOfferOnTimeline, thirdOfferOnTimeLine
-        ).map(AddOfferRequest::toOfferByPartNumber).toList();
+                firstOfferOnTimeline.toOfferByPartNumber(),
+                secondOfferOnTimeline.toOfferByPartNumber(),
+                thirdOfferOnTimeLine.toLastOfferByPartNumber()
+        ).toList();
         assertThat(offersTimetable).isEqualTo(expectedOffers);
     }
 
