@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Data
 public class OfferByPartNumber implements Serializable {
-  private static final DateTimeFormatter DATE_EXPECTED_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH.mm.ss'Z'")
+  private static final DateTimeFormatter DATE_EXPECTED_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
           .withZone(ZoneId.of("UTC"));
 
   private String startDate;
@@ -44,5 +44,14 @@ public class OfferByPartNumber implements Serializable {
 
   private static String formatDate(final Instant instant) {
     return DATE_EXPECTED_PATTERN.format(instant);
+  }
+
+  public static OfferByPartNumber from(Instant startB, Instant endB, BigDecimal price, String currencyISO) {
+    return new OfferByPartNumber(
+            startB.toString(),
+            endB.toString(),
+            price,
+            currencyISO
+    );
   }
 }

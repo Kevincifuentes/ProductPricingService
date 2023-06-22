@@ -62,4 +62,29 @@ public final class AddOfferRequestMother {
     private static Instant parseStringDateToInstant(final String dateString) {
         return Instant.from(DATE_TIME_FORMATTER.parse(dateString));
     }
+
+    public static AddOfferRequest randomWith(final String startDate, final String endDate, final int priority) {
+        return AddOfferRequest.builder()
+                .offerId(FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE))
+                .brandId(FAKER.random().nextInt())
+                .startDate(startDate)
+                .endDate(endDate)
+                .currencyIso(FAKER.currency().code())
+                .productPartnumber(FAKER.commerce().brand())
+                .priority(priority)
+                .priceListId(FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE))
+                .price(BigDecimal.valueOf(FAKER.random().nextDouble()).setScale(2, RoundingMode.CEILING))
+                .build();
+    }
+
+    public static AddOfferRequest with(AddOfferRequest exampleAddOfferRequest, String startDate, String endDate, int priority) {
+        return exampleAddOfferRequest.toBuilder()
+                .offerId(FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE))
+                .startDate(startDate)
+                .endDate(endDate)
+                .priority(priority)
+                .price(BigDecimal.valueOf(FAKER.random().nextDouble()).setScale(2, RoundingMode.CEILING))
+                .currencyIso(FAKER.currency().code())
+                .build();
+    }
 }

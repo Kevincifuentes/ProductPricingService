@@ -122,6 +122,59 @@ public class ProductPricingServiceE2ETest {
     }
 
     @Test
+    public void shouldFindAllAsTimetableProvidedExample() {
+        //given
+        final var firstOfferOnTimeline = AddOfferRequestMother.randomWith(
+                "2020-06-14T00.00.00Z",
+                "2020-12-31T23.59.59Z",
+                0
+        );
+        createOffer(firstOfferOnTimeline);
+        final var secondOfferOnTimeline = AddOfferRequestMother.with(
+                firstOfferOnTimeline,
+                "2020-06-14T15.00.00Z",
+                "2020-06-14T18.30.00Z",
+                1
+        );
+        createOffer(secondOfferOnTimeline);
+        final var thirdOfferOnTimeLine = AddOfferRequestMother.with(
+                firstOfferOnTimeline,
+                "2020-06-15T00.00.00Z",
+                "2020-06-15T11.00.00Z",
+                1
+        );
+        createOffer(thirdOfferOnTimeLine);
+        final var forthOfferOnTimeLine = AddOfferRequestMother.with(
+                firstOfferOnTimeline,
+                "2020-06-15T16.00.00Z",
+                "2020-12-31T23.59.59Z",
+                1
+        );
+        createOffer(forthOfferOnTimeLine);
+
+        final var offersTimetable = List.of(
+                given().
+                        contentType(ContentType.JSON).
+                        when().
+                        port(port).
+                        get(
+                                format(
+                                        "/brand/%s/partnumber/%s/offer",
+                                        secondOfferOnTimeline.brandId(),
+                                        secondOfferOnTimeline.productPartnumber()
+                                )).
+                        then().
+                        log().ifValidationFails().
+                        statusCode(HttpStatus.OK.value())
+                        .extract()
+                        .as(OfferByPartNumber[].class)
+        );
+
+        //then
+        assertThat(offersTimetable).hasSize(6);
+    }
+
+    @Test
     public void shouldDeleteById() {
         //given
         final var expectedId = createRandomOffer();
