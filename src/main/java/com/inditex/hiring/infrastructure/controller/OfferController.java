@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.inditex.hiring.infrastructure.controller.OfferByPartNumberMapper.buildOfferByPartNumbers;
+
 /**
  * You can change this controller but please do not change ends points signatures & payloads.
  */
@@ -61,10 +63,8 @@ public class OfferController {
   public List<OfferByPartNumber> getOfferByPartNumber(
           @PathVariable final Integer brandId, @PathVariable final String partnumber
   ) {
-    return queryBus.ask(buildFindOfferByCriteriaQuery(brandId, partnumber))
-            .stream()
-            .map(OfferByPartNumber::from)
-            .toList();
+    final var offerViews = queryBus.ask(buildFindOfferByCriteriaQuery(brandId, partnumber));
+    return buildOfferByPartNumbers(offerViews);
   }
 
   private static FindOffersByCriteriaQuery buildFindOfferByCriteriaQuery(Integer brandId, String partnumber) {

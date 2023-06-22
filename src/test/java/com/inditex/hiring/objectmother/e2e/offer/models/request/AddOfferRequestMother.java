@@ -29,7 +29,7 @@ public final class AddOfferRequestMother {
                 FAKER.random().nextInt(),
                 FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE),
                 DATE_TIME_FORMATTER.format(Instant.now()),
-                DATE_TIME_FORMATTER.format(Instant.now()),
+                DATE_TIME_FORMATTER.format(Instant.now().plus(ONE, ChronoUnit.DAYS)),
                 FAKER.random().nextInt(),
                 FAKER.commerce().brand(),
                 BigDecimal.valueOf(FAKER.random().nextDouble()).setScale(2, RoundingMode.CEILING),
@@ -61,5 +61,30 @@ public final class AddOfferRequestMother {
 
     private static Instant parseStringDateToInstant(final String dateString) {
         return Instant.from(DATE_TIME_FORMATTER.parse(dateString));
+    }
+
+    public static AddOfferRequest randomEurWith(final String startDate, final String endDate, final int priority, BigDecimal price) {
+        return AddOfferRequest.builder()
+                .offerId(FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE))
+                .brandId(FAKER.random().nextInt())
+                .startDate(startDate)
+                .endDate(endDate)
+                .currencyIso("EUR")
+                .productPartnumber(FAKER.commerce().brand())
+                .priority(priority)
+                .priceListId(FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE))
+                .price(price)
+                .build();
+    }
+
+    public static AddOfferRequest withEurCurrency(AddOfferRequest exampleAddOfferRequest, String startDate, String endDate, int priority, BigDecimal price) {
+        return exampleAddOfferRequest.toBuilder()
+                .offerId(FAKER.random().nextLong(MIN_LONG_VALUE, Long.MAX_VALUE))
+                .startDate(startDate)
+                .endDate(endDate)
+                .priority(priority)
+                .price(price)
+                .currencyIso("EUR")
+                .build();
     }
 }
