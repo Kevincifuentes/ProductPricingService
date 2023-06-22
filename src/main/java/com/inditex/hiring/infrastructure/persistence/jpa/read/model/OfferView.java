@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Entity
@@ -31,4 +32,8 @@ public class OfferView {
     private BigDecimal price;
     @Column(name = "CURR")
     private String currencyISO;
+
+    public List<Instant> getBothDates() {
+        return List.of(this.startDate, this.endDate);
+    }
 }
